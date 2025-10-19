@@ -10,7 +10,7 @@ How to import in IntelliJ IDEA:
 Build and run from command line:
 - mvn -v
 - mvn clean package
-- Run the app: `java -cp target/ivy-events-be-1.0-SNAPSHOT.jar org.ivy.IveEventsApplication`
+- Run the app: `java -cp target/ivy-events-be-1.0-SNAPSHOT.jar org.ivyinc.eventplanner.IveEventsApplication`
 
 Alternatively, in IntelliJ:
 - Open IveEventsApplication.java and click the green run icon next to the main method.
