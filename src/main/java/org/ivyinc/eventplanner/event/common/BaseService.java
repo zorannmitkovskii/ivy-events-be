@@ -7,12 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Transactional
 public abstract class BaseService<T extends BaseEntity> {
 
-    protected abstract JpaRepository<T, UUID> getRepository();
+    protected abstract JpaRepository<T, Long> getRepository();
 
     public List<T> findAll() {
         return getRepository().findAll();
@@ -22,7 +21,7 @@ public abstract class BaseService<T extends BaseEntity> {
         return getRepository().findAll(pageable);
     }
 
-    public Optional<T> findById(UUID id) {
+    public Optional<T> findById(Long id) {
         return getRepository().findById(id);
     }
 
@@ -30,7 +29,7 @@ public abstract class BaseService<T extends BaseEntity> {
         return getRepository().save(entity);
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         getRepository().deleteById(id);
     }
 }

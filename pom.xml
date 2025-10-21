@@ -90,6 +90,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <!-- Flyway PostgreSQL database support (required since Flyway 10) -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
         <!-- Mail (for RSVP notifications) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

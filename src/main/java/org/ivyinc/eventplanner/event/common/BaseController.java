@@ -43,7 +43,7 @@ public interface BaseController<T extends BaseEntity, S extends BaseService<T>> 
     }
 
     @GetMapping("/{id}")
-    default ResponseEntity<ApiResponse<T>> findById(@PathVariable UUID id) {
+    default ResponseEntity<ApiResponse<T>> findById(@PathVariable Long id) {
         return getService().findById(id)
                 .map(entity -> ResponseEntity.ok(ApiResponse.ok(entity)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -61,7 +61,7 @@ public interface BaseController<T extends BaseEntity, S extends BaseService<T>> 
     }
 
     @PutMapping("/{id}")
-    default ResponseEntity<ApiResponse<T>> update(@PathVariable UUID id, @Valid @RequestBody T entity) {
+    default ResponseEntity<ApiResponse<T>> update(@PathVariable Long id, @Valid @RequestBody T entity) {
         return getService().findById(id)
                 .map(existing -> {
                     entity.setId(id);
@@ -73,7 +73,7 @@ public interface BaseController<T extends BaseEntity, S extends BaseService<T>> 
     }
 
     @DeleteMapping("/{id}")
-    default ResponseEntity<Void> delete(@PathVariable UUID id) {
+    default ResponseEntity<Void> delete(@PathVariable Long id) {
         getService().deleteById(id);
         return ResponseEntity.noContent().build();
     }
