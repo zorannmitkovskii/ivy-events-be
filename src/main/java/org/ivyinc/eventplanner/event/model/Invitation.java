@@ -2,7 +2,7 @@ package org.ivyinc.eventplanner.event.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.ivyinc.eventplanner.event.common.BaseEntity;
+import org.ivyinc.eventplanner.common.BaseEntity;
 import org.ivyinc.eventplanner.event.enums.InvitationStatus;
 
 import java.time.Instant;

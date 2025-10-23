@@ -1,7 +1,7 @@
 package org.ivyinc.eventplanner.event.service;
 
 import lombok.RequiredArgsConstructor;
-import org.ivyinc.eventplanner.event.common.BaseService;
+import org.ivyinc.eventplanner.common.BaseService;
 import org.ivyinc.eventplanner.event.model.Invitation;
 import org.ivyinc.eventplanner.event.repository.InvitationRepository;
 import org.ivyinc.eventplanner.event.model.Event;

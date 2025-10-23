@@ -1,8 +1,8 @@
 package org.ivyinc.eventplanner.event.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.ivyinc.eventplanner.event.common.ApiResponse;
-import org.ivyinc.eventplanner.event.common.BaseController;
+import org.ivyinc.eventplanner.common.ApiResponse;
+import org.ivyinc.eventplanner.common.BaseController;
 import org.ivyinc.eventplanner.event.model.Invitation;
 import org.ivyinc.eventplanner.event.service.InvitationService;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/invitations")
+@RequestMapping("/v1/api/invitations")
 public class InvitationController implements BaseController<Invitation, InvitationService> {
 
     private final InvitationService invitationService;
