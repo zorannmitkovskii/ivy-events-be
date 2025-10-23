@@ -1,4 +1,4 @@
-package org.ivyinc.eventplanner.event.common;
+package org.ivyinc.eventplanner.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

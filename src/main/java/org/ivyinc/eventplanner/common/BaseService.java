@@ -1,4 +1,4 @@
-package org.ivyinc.eventplanner.event.common;
+package org.ivyinc.eventplanner.common;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

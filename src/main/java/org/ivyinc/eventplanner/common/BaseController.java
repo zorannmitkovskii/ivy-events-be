@@ -1,6 +1,7 @@
-package org.ivyinc.eventplanner.event.common;
+package org.ivyinc.eventplanner.common;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.UUID;
 
 /**
  * Generic REST interface providing CRUD endpoints.
@@ -19,7 +19,7 @@ import java.util.UUID;
  *
  * Example:
  * @RestController
- * @RequestMapping("/api/events")
+ * @RequestMapping("/v1/api/*")
  * public class EventController implements BaseController<Event, EventService> { }
  */
 public interface BaseController<T extends BaseEntity, S extends BaseService<T>> {
