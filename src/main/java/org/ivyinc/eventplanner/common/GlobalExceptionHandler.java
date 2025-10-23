@@ -1,4 +1,4 @@
-package org.ivyinc.eventplanner.event.common;
+package org.ivyinc.eventplanner.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
