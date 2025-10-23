@@ -1,7 +1,7 @@
 package org.ivyinc.eventplanner.event.service;
 
 import lombok.RequiredArgsConstructor;
-import org.ivyinc.eventplanner.event.common.BaseService;
+import org.ivyinc.eventplanner.common.BaseService;
 import org.ivyinc.eventplanner.event.model.Event;
 import org.ivyinc.eventplanner.event.repository.EventRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
