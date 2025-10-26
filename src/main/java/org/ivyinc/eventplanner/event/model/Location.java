@@ -5,6 +5,8 @@ import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 import org.ivyinc.eventplanner.event.enums.LocationType;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,38 +16,36 @@ import org.ivyinc.eventplanner.event.enums.LocationType;
 @Table(name = "locations")
 public class Location extends BaseEntity {
 
-    @Column(nullable = false, length = 255)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private LocationType type;
+    @Column(name = "address_line")
+    private String addressLine;
 
-    @Column(length = 255)
-    private String address;
-
-    @Column(name = "gmaps_link", columnDefinition = "TEXT")
-    private String gmapsLink;
-
-    @Column(name = "latitude")
-    private Double latitude;
-
-    @Column(name = "longitude")
-    private Double longitude;
-
-    @Column(name = "phone_number", length = 50)
-    private String phoneNumber;
-
-    @Column(name = "website", length = 255)
-    private String website;
-
-    @Column(name = "city", length = 100)
     private String city;
 
-    @Column(name = "country", length = 100)
     private String country;
 
-    @Column(name = "notes", columnDefinition = "TEXT")
-    private String notes;
-}
+    private BigDecimal latitude;
 
+    private BigDecimal longitude;
+
+    @Column(name = "google_maps_url")
+    private String googleMapsUrl;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    private Integer capacity;
+
+    private String notes;
+
+    @Column(name = "contact_id")
+    private String contactId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private LocationType type;
+
+    @Column(name = "is_active")
+    private Boolean active;
+}
