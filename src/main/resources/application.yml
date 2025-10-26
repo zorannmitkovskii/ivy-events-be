@@ -14,3 +14,12 @@ spring:
     enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: true
+storage:
+  provider: local   # or s3
+  local:
+    path: uploads   # where files go in dev
+#  s3:
+#    bucket: ivyinc-storage
+#    region: eu-central-1
+#    accessKey: ${AWS_ACCESS_KEY_ID:}
+#    secretKey: ${AWS_SECRET_ACCESS_KEY:}
