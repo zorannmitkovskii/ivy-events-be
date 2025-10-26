@@ -10,7 +10,7 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "feedbacks")
+@Table(name = "feedback")
 public class Feedback extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,8 +31,10 @@ public class Feedback extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
+    @Column(name = "media_url")
     private String mediaUrl;
 
+    @Column(name = "is_public")
     @Builder.Default
     private Boolean isPublic = false;
 }
