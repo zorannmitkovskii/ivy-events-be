@@ -3,7 +3,6 @@ package org.ivyinc.eventplanner.event.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
-import org.ivyinc.eventplanner.event.enums.RSVPStatus;
 
 @Getter
 @Setter
@@ -15,22 +14,35 @@ import org.ivyinc.eventplanner.event.enums.RSVPStatus;
 public class Guest extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "invitation_id", nullable = false)
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invitation_id")
     private Invitation invitation;
 
     @Column(nullable = false, length = 255)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "rsvp_status", nullable = false, length = 20)
-    private RSVPStatus rsvpStatus;
+    @Column(columnDefinition = "TEXT")
+    private String note;
 
-    @Column(name = "dietary_preference", length = 50)
-    private String dietaryPreference;
+    @Column(name = "table_number", length = 50)
+    private String tableNumber;
 
-    @Column(name = "seat_number", length = 10)
-    private String seatNumber;
+    // store JSON string
+    @Column(name = "dietary_preferences", columnDefinition = "TEXT")
+    private String dietaryPreferences;
 
-    @Column(name = "message_to_organizer")
-    private String messageToOrganizer;
+    @Column(name = "contact_id")
+    private String contactId;
+
+    @Column(name = "notification_type", length = 50)
+    private String notificationType;
+
+    @Column(name = "check_in_status")
+    private Boolean checkInStatus;
+
+    @Column(name = "qr_code", length = 255)
+    private String qrCode;
 }
