@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/api/event-info")
+@RequestMapping("/v1/api/event-infos")
 public class EventInfoController implements BaseController<EventInfo, EventInfoService> {
 
     private final EventInfoService eventInfoService;

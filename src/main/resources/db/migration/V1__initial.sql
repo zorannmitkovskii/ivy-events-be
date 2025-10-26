@@ -204,17 +204,31 @@ CREATE TABLE packages (
 -- ===================================
 -- 8️⃣ Music
 -- ===================================
-CREATE TABLE music (
+CREATE TABLE bands (
                        id CHAR(36) PRIMARY KEY,
                        event_id CHAR(36),
-                       name VARCHAR(255),
+                       name VARCHAR(255) NOT NULL,
                        description TEXT,
                        music_type VARCHAR(50),
-                       song_list JSON,
-                       provider_id VARCHAR(255),
                        video_url VARCHAR(500),
+                       provider_id VARCHAR(255),
+                       contact_name VARCHAR(255),
+                       contact_email VARCHAR(255),
+                       contact_phone VARCHAR(50),
+                       price DECIMAL(10,2),
+                       rating DECIMAL(3,2),
+                       notes TEXT,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                        CONSTRAINT fk_music_event FOREIGN KEY (event_id) REFERENCES events(id)
+);
+
+-- Optional: store individual song names as separate records
+CREATE TABLE music_song_list (
+                                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                 music_id CHAR(36),
+                                 song_name VARCHAR(255),
+                                 CONSTRAINT fk_music_song FOREIGN KEY (music_id) REFERENCES music(id)
 );
 
 -- ===================================

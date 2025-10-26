@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/api/events")
+@RequestMapping("/v1/api/payments")
 public class PaymentController implements BaseController<Payment, PaymentService> {
 
     private final PaymentService paymentService;
