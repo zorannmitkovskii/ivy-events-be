@@ -3,9 +3,6 @@ package org.ivyinc.eventplanner.event.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
-import org.ivyinc.eventplanner.event.enums.InvitationStatus;
-
-import java.time.Instant;
 
 @Getter
 @Setter
@@ -17,28 +14,23 @@ import java.time.Instant;
 public class Invitation extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "event_id")
     private Event event;
 
-    @Column(name = "contact_name", nullable = false, length = 255)
-    private String contactName;
+    @Column(name = "template_id")
+    private Long templateId;
 
-    @Column(name = "contact_email_or_phone", nullable = false, length = 255)
-    private String contactEmailOrPhone;
+    @Column(name = "form_id")
+    private Long formId;
 
-    @Column(name = "guest_limit")
-    private Integer guestLimit;
+    // Store JSON as text for simplicity
+    @Column(name = "custom_sections", columnDefinition = "TEXT")
+    private String customSections;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private InvitationStatus status;
-
-    @Column(name = "response_date")
-    private Instant responseDate;
-
-    @Column(name = "message_from_contact", columnDefinition = "TEXT")
-    private String messageFromContact;
-
-    @Column(name = "public_code", unique = true, length = 50)
+    // Map to unique_url
+    @Column(name = "unique_url", unique = true)
     private String publicCode;
+
+    @Column(name = "is_active")
+    private Boolean active;
 }
