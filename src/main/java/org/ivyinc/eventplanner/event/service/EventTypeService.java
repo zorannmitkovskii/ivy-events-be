@@ -1,20 +1,18 @@
 package org.ivyinc.eventplanner.event.service;
 
-import lombok.RequiredArgsConstructor;
-import org.ivyinc.eventplanner.common.BaseService;
+import org.ivyinc.eventplanner.common.BaseServiceImpl;
+import org.ivyinc.eventplanner.event.dto.EventTypeCreateDto;
+import org.ivyinc.eventplanner.event.dto.EventTypeResponseDto;
+import org.ivyinc.eventplanner.event.dto.EventTypeUpdateDto;
+import org.ivyinc.eventplanner.event.mapper.EventTypeMapper;
 import org.ivyinc.eventplanner.event.model.EventType;
 import org.ivyinc.eventplanner.event.repository.EventTypeRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+
 @Service
-@RequiredArgsConstructor
-public class EventTypeService extends BaseService<EventType> {
-
-    private final EventTypeRepository eventTypeRepository;
-
-    @Override
-    protected JpaRepository<EventType, Long> getRepository() {
-        return eventTypeRepository;
+public class EventTypeService extends BaseServiceImpl<EventType, EventTypeCreateDto, EventTypeUpdateDto, EventTypeResponseDto, EventTypeRepository> {
+    public EventTypeService(EventTypeRepository repository, EventTypeMapper mapper) {
+        super(repository, mapper);
     }
 }

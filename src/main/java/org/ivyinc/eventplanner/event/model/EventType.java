@@ -1,10 +1,10 @@
 package org.ivyinc.eventplanner.event.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,10 +15,11 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 @Table(name = "event_types")
 public class EventType extends BaseEntity {
 
-    @Column(name = "event_category_id")
-    private Long eventCategoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_category_id")
+    private EventCategory eventCategory;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String name;
 
     @Column(columnDefinition = "TEXT")
