@@ -23,7 +23,9 @@ public class Location extends BaseEntity {
 
     private String city;
 
-    private String country;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_iso3", referencedColumnName = "iso3")
+    private Country country;
 
     private BigDecimal latitude;
 
@@ -38,9 +40,6 @@ public class Location extends BaseEntity {
     private Integer capacity;
 
     private String notes;
-
-    @Column(name = "contact_id")
-    private String contactId;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50)

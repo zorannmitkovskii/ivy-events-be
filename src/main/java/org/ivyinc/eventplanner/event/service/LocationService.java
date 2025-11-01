@@ -1,42 +1,51 @@
 package org.ivyinc.eventplanner.event.service;
 
-import lombok.RequiredArgsConstructor;
-import org.ivyinc.eventplanner.common.BaseService;
-import org.ivyinc.eventplanner.event.enums.LocationType;
+import org.ivyinc.eventplanner.common.BaseServiceImpl;
+import org.ivyinc.eventplanner.event.dto.LocationCreateDto;
+import org.ivyinc.eventplanner.event.dto.LocationResponseDto;
+import org.ivyinc.eventplanner.event.dto.LocationUpdateDto;
+import org.ivyinc.eventplanner.event.mapper.LocationMapper;
+import org.ivyinc.eventplanner.event.model.Country;
 import org.ivyinc.eventplanner.event.model.Location;
+import org.ivyinc.eventplanner.event.repository.CountryRepository;
 import org.ivyinc.eventplanner.event.repository.LocationRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+import java.util.UUID;
+
 @Service
-@RequiredArgsConstructor
-public class LocationService extends BaseService<Location> {
-    private final LocationRepository locationRepository;
-    private final org.ivyinc.eventplanner.event.mapper.LocationMapper locationMapper;
+public class LocationService extends BaseServiceImpl<Location, LocationCreateDto, LocationUpdateDto, LocationResponseDto, LocationRepository> {
+    private final CountryRepository countryRepository;
+
+    public LocationService(LocationRepository repository, LocationMapper mapper, CountryRepository countryRepository) {
+        super(repository, mapper);
+        this.countryRepository = countryRepository;
+    }
 
     @Override
-    protected JpaRepository<Location, Long> getRepository() {
-        return locationRepository;
+    public LocationResponseDto create(LocationCreateDto dto) {
+        Location entity = mapper.toEntity(dto);
+        if (dto.country() != null && !dto.country().isBlank()) {
+            entity.setCountry(resolveCountry(dto.country()));
+        }
+        return mapper.toResponse(repository.save(entity));
     }
 
-    public Page<Location> findByType(LocationType type, Pageable pageable) {
-        return locationRepository.findByType(type, pageable);
+    @Override
+    public LocationResponseDto update(String id, LocationUpdateDto dto) {
+        Location entity = repository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new RuntimeException("Entity not found with id: " + id));
+        mapper.updateEntity(entity, dto);
+        if (dto.country() != null && !dto.country().isBlank()) {
+            entity.setCountry(resolveCountry(dto.country()));
+        }
+        return mapper.toResponse(repository.save(entity));
     }
 
-    public Page<Location> findByCity(String city, Pageable pageable) {
-        return locationRepository.findByCityIgnoreCase(city, pageable);
-    }
-
-    public Page<Location> search(String keyword, Pageable pageable) {
-        return locationRepository.findByNameContainingIgnoreCaseOrCityContainingIgnoreCase(keyword, keyword, pageable);
-    }
-
-    public Location update(Long id, org.ivyinc.eventplanner.event.dto.LocationUpdateDto dto) {
-        return locationRepository.findById(id).map(existing -> {
-            locationMapper.updateLocationFromDto(dto, existing);
-            return locationRepository.save(existing);
-        }).orElseThrow(() -> new IllegalArgumentException("Location not found"));
+    private Country resolveCountry(String iso3) {
+        String code = iso3.trim().toUpperCase(Locale.ROOT);
+        return countryRepository.findByIso3(code)
+                .orElseThrow(() -> new IllegalArgumentException("Country not found for ISO3: " + code));
     }
 }
