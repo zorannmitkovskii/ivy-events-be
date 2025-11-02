@@ -1,10 +1,10 @@
 package org.ivyinc.eventplanner.event.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,8 +20,9 @@ public class Vendor extends BaseEntity {
     @Column(name = "vendor_type", length = 100)
     private String vendorType;
 
-    @Column(name = "contact_id")
-    private String contactId;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id")
+    private Contact contact;
 
     @Column(length = 500)
     private String website;
@@ -29,9 +30,13 @@ public class Vendor extends BaseEntity {
     @Column(name = "instagram_url", length = 500)
     private String instagramUrl;
 
-    @Column(precision = 3, scale = 2)
-    private java.math.BigDecimal rating;
+    @Column()
+    private Double rating;
 
     @Column(name = "is_active")
     private Boolean active;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "package_id")
+    private List<Package> packages;
 }
