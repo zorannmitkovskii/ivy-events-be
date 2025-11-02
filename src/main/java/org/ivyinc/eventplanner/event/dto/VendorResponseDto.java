@@ -13,7 +13,7 @@ public record VendorResponseDto(
         String website,
         String instagramUrl,
         Double rating,
-        Boolean active,
+        Boolean isActive,
         List<PackageResponseDto> packages
 ) implements BaseResponseDto {
 }

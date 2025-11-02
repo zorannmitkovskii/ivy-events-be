@@ -9,6 +9,7 @@ public record VendorUpdateDto(
         String website,
         String instagramUrl,
         Double rating,
-        Boolean active
+        Boolean active,
+        PackageCreateDto packageCreateDto
 ) implements BaseUpdateRequestDto {
 }

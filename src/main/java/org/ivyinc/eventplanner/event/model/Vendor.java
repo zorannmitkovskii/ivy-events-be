@@ -34,9 +34,8 @@ public class Vendor extends BaseEntity {
     private Double rating;
 
     @Column(name = "is_active")
-    private Boolean active;
+    private Boolean isActive;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "package_id")
+    @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Package> packages;
 }

@@ -5,6 +5,6 @@ import org.ivyinc.eventplanner.event.dto.*;
 import org.ivyinc.eventplanner.event.model.Vendor;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", uses = {ContactMapper.class, PackageMapper.class}, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring", uses = {ContactMapper.class, PackageMapper.class})
 public interface VendorMapper extends BaseMapper<Vendor, VendorCreateDto, VendorUpdateDto, VendorResponseDto> {
 }
