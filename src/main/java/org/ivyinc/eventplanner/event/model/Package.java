@@ -1,12 +1,8 @@
 package org.ivyinc.eventplanner.event.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
-
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -22,12 +18,14 @@ public class Package extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "vendor_id")
-    private Long vendorId;
+    @Column()
+    private Double price;
 
-    @Column(name = "video_url", length = 500)
-    private String videoUrl;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
 
-    @Column(precision = 10, scale = 2)
-    private BigDecimal price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "band_id")
+    private Band band;
 }
