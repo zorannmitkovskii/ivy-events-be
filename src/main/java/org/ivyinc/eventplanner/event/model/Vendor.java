@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -36,6 +37,6 @@ public class Vendor extends BaseEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Package> packages;
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Package> packages = new ArrayList<>();
 }
