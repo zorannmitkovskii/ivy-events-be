@@ -1,80 +1,37 @@
 package org.ivyinc.eventplanner.common;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import java.util.List;
 
-/**
- * Generic REST interface providing CRUD endpoints.
- * Implement this interface in entity-specific controllers.
- *
- * Example:
- * @RestController
- * @RequestMapping("/v1/api/*")
- * public class EventController implements BaseController<Event, EventService> { }
- */
-public interface BaseController<T extends BaseEntity, S extends BaseService<T>> {
+public interface BaseController<E, CreateReq, UpdateReq, Res> {
 
-    S getService(); // Implementing class must provide the service
-
-    @GetMapping
-    default ResponseEntity<ApiResponse<Page<T>>> findAll(
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size,
-            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
-            @RequestParam(required = false, defaultValue = "desc") String direction
-    ) {
-        Sort sort = "desc".equalsIgnoreCase(direction)
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<T> result = getService().findAll(pageable);
-        return ResponseEntity.ok(ApiResponse.ok(result));
-    }
-
-    @GetMapping("/{id}")
-    default ResponseEntity<ApiResponse<T>> findById(@PathVariable Long id) {
-        return getService().findById(id)
-                .map(entity -> ResponseEntity.ok(ApiResponse.ok(entity)))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ApiResponse.fail("Resource not found")));
-    }
+    BaseService<E, CreateReq, UpdateReq, Res> getService();
 
     @PostMapping
-    default ResponseEntity<ApiResponse<T>> create(@Valid @RequestBody T entity) {
-        T saved = getService().save(entity);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(saved.getId())
-                .toUri();
-        return ResponseEntity.created(location).body(ApiResponse.ok(saved));
+    default ResponseEntity<Res> create(@RequestBody CreateReq dto) {
+        return ResponseEntity.ok(getService().create(dto));
     }
 
     @PutMapping("/{id}")
-    default ResponseEntity<ApiResponse<T>> update(@PathVariable Long id, @Valid @RequestBody T entity) {
-        return getService().findById(id)
-                .map(existing -> {
-                    entity.setId(id);
-                    T updated = getService().save(entity);
-                    return ResponseEntity.ok(ApiResponse.ok(updated));
-                })
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ApiResponse.fail("Resource not found")));
+    default ResponseEntity<Res> update(@PathVariable String id, @RequestBody UpdateReq dto) {
+        return ResponseEntity.ok(getService().update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    default ResponseEntity<Void> delete(@PathVariable Long id) {
-        getService().deleteById(id);
+    default ResponseEntity<Void> delete(@PathVariable String id) {
+        getService().delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    default ResponseEntity<Res> getById(@PathVariable String id) {
+        return ResponseEntity.ok(getService().findById(id));
+    }
+
+    @GetMapping
+    default ResponseEntity<List<Res>> getAll() {
+        return ResponseEntity.ok(getService().findAll());
     }
 }
