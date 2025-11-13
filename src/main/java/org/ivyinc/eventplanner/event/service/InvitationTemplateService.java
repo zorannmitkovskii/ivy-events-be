@@ -1,20 +1,17 @@
 package org.ivyinc.eventplanner.event.service;
 
-import lombok.RequiredArgsConstructor;
-import org.ivyinc.eventplanner.common.BaseService;
+import org.ivyinc.eventplanner.common.BaseServiceImpl;
+import org.ivyinc.eventplanner.event.dto.InvitationTemplateCreateRequestDto;
+import org.ivyinc.eventplanner.event.dto.InvitationTemplateResponseDto;
+import org.ivyinc.eventplanner.event.dto.InvitationTemplateUpdateRequestDto;
+import org.ivyinc.eventplanner.event.mapper.InvitationTemplateMapper;
 import org.ivyinc.eventplanner.event.model.InvitationTemplate;
 import org.ivyinc.eventplanner.event.repository.InvitationTemplateRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-public class InvitationTemplateService extends BaseService<InvitationTemplate> {
-
-    private final InvitationTemplateRepository repository;
-
-    @Override
-    protected JpaRepository<InvitationTemplate, Long> getRepository() {
-        return repository;
+public class InvitationTemplateService extends BaseServiceImpl<InvitationTemplate, InvitationTemplateCreateRequestDto, InvitationTemplateUpdateRequestDto, InvitationTemplateResponseDto, InvitationTemplateRepository> {
+    public InvitationTemplateService(InvitationTemplateRepository repository, InvitationTemplateMapper mapper) {
+        super(repository, mapper);
     }
 }

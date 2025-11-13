@@ -14,7 +14,7 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 public class InvitationSection extends BaseEntity {
 
     @Column(name = "template_id")
-    private Long templateId;
+    private String templateId;
 
     private String name;
 

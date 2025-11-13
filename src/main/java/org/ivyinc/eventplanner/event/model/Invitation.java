@@ -18,10 +18,10 @@ public class Invitation extends BaseEntity {
     private Event event;
 
     @Column(name = "template_id")
-    private Long templateId;
+    private String templateId;
 
     @Column(name = "form_id")
-    private Long formId;
+    private String formId;
 
     // Store JSON as text for simplicity
     @Column(name = "custom_sections", columnDefinition = "TEXT")
