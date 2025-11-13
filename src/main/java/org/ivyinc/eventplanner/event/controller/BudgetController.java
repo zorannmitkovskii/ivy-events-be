@@ -2,6 +2,9 @@ package org.ivyinc.eventplanner.event.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.ivyinc.eventplanner.common.BaseController;
+import org.ivyinc.eventplanner.event.dto.BudgetCreateDto;
+import org.ivyinc.eventplanner.event.dto.BudgetResponseDto;
+import org.ivyinc.eventplanner.event.dto.BudgetUpdateDto;
 import org.ivyinc.eventplanner.event.model.Budget;
 import org.ivyinc.eventplanner.event.service.BudgetService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/api/budgets")
-public class BudgetController implements BaseController<Budget, BudgetService> {
-    private BudgetService budgetService;
+public class BudgetController implements BaseController<Budget, BudgetCreateDto, BudgetUpdateDto, BudgetResponseDto> {
+
+    private final BudgetService budgetService;
+
     @Override
     public BudgetService getService() {
         return budgetService;
