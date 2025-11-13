@@ -16,7 +16,7 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 public class EventInfo extends BaseEntity {
 
     @Column(name = "form_id")
-    private Long formId;
+    private String formId;
 
     @Column(columnDefinition = "TEXT")
     private String note;
