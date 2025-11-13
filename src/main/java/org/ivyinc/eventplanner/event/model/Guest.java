@@ -34,8 +34,9 @@ public class Guest extends BaseEntity {
     @Column(name = "dietary_preferences", columnDefinition = "TEXT")
     private String dietaryPreferences;
 
-    @Column(name = "contact_id")
-    private String contactId;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id")
+    private Contact contact;
 
     @Column(name = "notification_type", length = 50)
     private String notificationType;
