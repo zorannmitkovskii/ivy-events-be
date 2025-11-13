@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class Payment extends BaseEntity {
 
     @Column(name = "event_id")
-    private Long eventId;
+    private String eventId;
 
     @Column(precision = 10, scale = 2)
     private BigDecimal amount;
