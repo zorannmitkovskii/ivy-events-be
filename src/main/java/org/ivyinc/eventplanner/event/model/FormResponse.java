@@ -18,13 +18,13 @@ import java.time.Instant;
 public class FormResponse extends BaseEntity {
 
     @Column(name = "field_id")
-    private Long fieldId;
+    private String fieldId;
 
     @Column(name = "guest_id")
-    private Long guestId;
+    private String guestId;
 
     @Column(name = "event_id")
-    private Long eventId;
+    private String eventId;
 
     @Column(columnDefinition = "TEXT")
     private String answer;

@@ -16,7 +16,7 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 public class FormField extends BaseEntity {
 
     @Column(name = "form_id")
-    private Long formId;
+    private String formId;
 
     private String question;
 
