@@ -5,6 +5,8 @@ import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 import org.ivyinc.eventplanner.event.enums.ActivityAction;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +16,7 @@ import org.ivyinc.eventplanner.event.enums.ActivityAction;
 @Table(name = "activity_logs")
 public class ActivityLog extends BaseEntity {
 
-    private Long ownerId;
+    private UUID ownerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
