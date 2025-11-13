@@ -18,10 +18,10 @@ import java.math.BigDecimal;
 public class Expense extends BaseEntity {
 
     @Column(name = "event_id")
-    private Long eventId;
+    private String eventId;
 
     @Column(name = "budget_id")
-    private Long budgetId;
+    private String budgetId;
 
     private String name;
 
