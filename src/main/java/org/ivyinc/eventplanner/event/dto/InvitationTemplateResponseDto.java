@@ -2,15 +2,19 @@ package org.ivyinc.eventplanner.event.dto;
 
 import org.ivyinc.eventplanner.common.BaseResponseDto;
 
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 public record InvitationTemplateResponseDto(
         UUID id,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         String name,
         String templatePath,
         String previewImage,
         String description,
-        String sections,
+        Map<String, Object> sections,
         String themeColor,
         String fontStyle,
         String backgroundImageUrl,

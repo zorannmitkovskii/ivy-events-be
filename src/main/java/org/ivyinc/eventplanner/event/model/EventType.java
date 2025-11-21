@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,4 +22,11 @@ public class EventType extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "icon_url", length = 500)
+    private String iconUrl;
+
+    @Builder.Default
+    @Column(name = "is_active")
+    private Boolean isActive = true;
 }

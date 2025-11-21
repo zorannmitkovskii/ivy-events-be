@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class ApiResponse<T> {
     private boolean success;
     private String message;
@@ -16,6 +15,12 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> ok(T data) {
         return new ApiResponse<>(true, null, data);
+    }
+
+    public ApiResponse(boolean success, String message, T data) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
     }
 
     public static <T> ApiResponse<T> fail(String message) {

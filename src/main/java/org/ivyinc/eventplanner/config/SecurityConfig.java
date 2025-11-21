@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@org.springframework.context.annotation.Profile("!test")
 @EnableWebSecurity
 public class SecurityConfig {
 

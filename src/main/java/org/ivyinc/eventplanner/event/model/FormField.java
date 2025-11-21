@@ -1,13 +1,12 @@
 package org.ivyinc.eventplanner.event.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
+import org.ivyinc.eventplanner.event.enums.FieldType;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -15,21 +14,21 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 @Table(name = "fields")
 public class FormField extends BaseEntity {
 
-    @Column(name = "form_id")
-    private String formId;
+    private String label;
 
-    private String question;
+    @Enumerated(EnumType.STRING)
+    private FieldType type;
 
-    @Column(name = "field_type", length = 50)
-    private String fieldType;
+    private Integer orderIndex;
 
-    // Store JSON options as TEXT
-    @Column(columnDefinition = "TEXT")
-    private String options;
+    private boolean required;
 
-    @Column(name = "is_required")
-    private Boolean required;
+    @Column(length = 2048)
+    private String placeholder;
 
-    @Column(name = "field_order")
-    private Integer fieldOrder;
+    @Column(length = 4096)
+    private String validationRegex;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Form form;
 }

@@ -8,7 +8,7 @@ import org.ivyinc.eventplanner.event.model.Dietary;
 
 import java.util.UUID;
 
-public class DietaryBuilder implements DtoBuilder<DietaryCreateDto, DietaryUpdateDto, DietaryResponseDto> {
+public class DietaryBuilder implements DtoBuilder<Dietary, DietaryCreateDto, DietaryUpdateDto, DietaryResponseDto> {
 
     public Dietary sampleDietary() {
         return Dietary.builder()
@@ -29,6 +29,12 @@ public class DietaryBuilder implements DtoBuilder<DietaryCreateDto, DietaryUpdat
                 .name("Vegetarian")
                 .description("Excludes meat and fish, but allows dairy and eggs.")
                 .build();
+    }
+
+    @Override
+    public Dietary sampleEntity() {
+        return new Dietary("Standard",
+                "Balanced diet including all major food groups.");
     }
 
     @Override
@@ -53,6 +59,28 @@ public class DietaryBuilder implements DtoBuilder<DietaryCreateDto, DietaryUpdat
                 "Balanced diet including all major food groups.");
     }
 
+    @Override
+    public DietaryResponseDto sampleCreateResponse(UUID id) {
+        return new DietaryResponseDto(
+                id,
+                java.time.LocalDateTime.now(),
+                java.time.LocalDateTime.now(),
+                "Vegan",
+                "No animal products or derivatives"
+        );
+    }
+
+    @Override
+    public DietaryResponseDto sampleUpdateResponse(UUID id) {
+        return new DietaryResponseDto(
+                id,
+                java.time.LocalDateTime.now(),
+                java.time.LocalDateTime.now(),
+                "Vegan",
+                "No animal products or derivatives"
+        );
+    }
+
     public static DietaryUpdateDto veganDietaryUpdateDto() {
         return new DietaryUpdateDto("Vegan",
                 "Excludes all animal products, including meat, dairy, and eggs.");
@@ -61,11 +89,6 @@ public class DietaryBuilder implements DtoBuilder<DietaryCreateDto, DietaryUpdat
     public static DietaryUpdateDto vegetarianDietaryUpdateDto() {
         return new DietaryUpdateDto("Vegetarian",
                 "Excludes meat and fish, but allows dairy and eggs.");
-    }
-
-    @Override
-    public DietaryResponseDto sampleResponse(UUID id) {
-        return new DietaryResponseDto(id, "Vegan", "No animal products or derivatives");
     }
 
     @Override

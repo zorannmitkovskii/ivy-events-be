@@ -2,19 +2,24 @@ package org.ivyinc.eventplanner.event.dto;
 
 import org.ivyinc.eventplanner.event.enums.LocationType;
 
-import java.math.BigDecimal;
+import java.util.Map;
+import java.util.UUID;
 
 public record LocationCreateDto(
         String name,
         LocationType type,
+        String postalCode,
         String addressLine,
         String city,
-        String country, // ISO3 code (e.g., "USA", "FRA")
-        BigDecimal latitude,
-        BigDecimal longitude,
+        String countryIso3,
+        Double latitude,
+        Double longitude,
+        String photoUrl,
         String googleMapsUrl,
         String description,
         Integer capacity,
-        String notes
-) {
-}
+        Map<String, Object> openingHours,
+        String notes,
+        UUID contactId,
+        Boolean isActive
+) {}

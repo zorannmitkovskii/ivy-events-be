@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,13 +23,29 @@ public class Package extends BaseEntity {
     private String description;
 
     @Column()
-    private Double price;
+    private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id")
-    private Vendor vendor;
+    @Column(name = "price_currency", length = 10)
+    private String priceCurrency;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "band_id")
-    private Band band;
+    @Column(name = "video_url", length = 500)
+    private String videoUrl;
+
+    @ManyToMany
+    @JoinTable(
+            name = "vendor_packages",
+            joinColumns = @JoinColumn(name = "package_id"),
+            inverseJoinColumns = @JoinColumn(name = "vendor_id")
+    )
+    @Builder.Default
+    private List<Vendor> vendors = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "location_packages",
+            joinColumns = @JoinColumn(name = "package_id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id")
+    )
+    @Builder.Default
+    private List<Location> locations = new ArrayList<>();
 }

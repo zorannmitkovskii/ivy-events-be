@@ -1,12 +1,12 @@
 package org.ivyinc.eventplanner.event.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,17 +17,27 @@ import java.math.BigDecimal;
 @Table(name = "expenses")
 public class Expense extends BaseEntity {
 
-    @Column(name = "event_id")
-    private String eventId;
-
-    @Column(name = "budget_id")
-    private String budgetId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
 
     private String name;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(precision = 10, scale = 2)
+    @Column()
     private BigDecimal amount;
+
+    @Column(name = "due_date")
+    private LocalDateTime dueDate;
+
+    @Column(name = "payment_status", length = 50)
+    private String paymentStatus;
+
+    @Column(name = "payment_method", length = 50)
+    private String paymentMethod;
+
+    @Column(name = "receipt_url", length = 500)
+    private String receiptUrl;
 }

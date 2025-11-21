@@ -1,8 +1,6 @@
 package org.ivyinc.eventplanner.event.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 
@@ -17,17 +15,21 @@ import java.math.BigDecimal;
 @Table(name = "budgets")
 public class Budget extends BaseEntity {
 
-    @Column(name = "event_id")
-    private Long eventId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     private String name;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(precision = 10, scale = 2)
+    @Column()
     private BigDecimal amount;
 
-    @Column(name = "remain_amount", precision = 10, scale = 2)
+    @Column(name = "remain_amount")
     private BigDecimal remainAmount;
+
+    @Column(length = 10)
+    private String currency;
 }

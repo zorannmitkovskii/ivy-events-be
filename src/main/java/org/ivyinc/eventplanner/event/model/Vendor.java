@@ -3,7 +3,10 @@ package org.ivyinc.eventplanner.event.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
+import org.ivyinc.eventplanner.event.enums.VendorType;
+import org.ivyinc.eventplanner.event.enums.AvailabilityStatus;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class Vendor extends BaseEntity {
     private String name;
 
     @Column(name = "vendor_type", length = 100)
-    private String vendorType;
+    private VendorType type;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_id")
@@ -31,12 +34,22 @@ public class Vendor extends BaseEntity {
     @Column(name = "instagram_url", length = 500)
     private String instagramUrl;
 
-    @Column()
+    @Column(name = "service_area", length = 255)
+    private String serviceArea;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "availability_status", length = 50)
+    private AvailabilityStatus availabilityStatus;
+
+    @Column(name = "contract_url", length = 500)
+    private String contractUrl;
+
+    @Column(name = "rating")
     private Double rating;
 
     @Column(name = "is_active")
-    private Boolean isActive;
+    private Boolean isActive = true;
 
-    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(mappedBy = "vendors")
     private List<Package> packages = new ArrayList<>();
 }

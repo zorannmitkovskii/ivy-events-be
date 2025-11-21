@@ -26,8 +26,8 @@ public class LocationService extends BaseServiceImpl<Location, LocationCreateDto
     @Override
     public LocationResponseDto create(LocationCreateDto dto) {
         Location entity = mapper.toEntity(dto);
-        if (dto.country() != null && !dto.country().isBlank()) {
-            entity.setCountry(resolveCountry(dto.country()));
+        if (dto.countryIso3() != null && !dto.countryIso3().isBlank()) {
+            entity.setCountry(resolveCountry(dto.countryIso3()));
         }
         return mapper.toResponse(repository.save(entity));
     }

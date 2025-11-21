@@ -1,0 +1,35 @@
+spring:
+  main:
+    web-application-type: servlet
+  datasource:
+    url: jdbc:h2:mem:ivytest;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: admintest
+    password: admintest
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+  sql:
+    init:
+      mode: never
+  autoconfigure:
+    exclude: >-
+      org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration,
+      org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration,
+      org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration,
+      org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration,
+      org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration,
+      org.springframework.boot.autoconfigure.web.reactive.ReactiveWebServerFactoryAutoConfiguration,
+      org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration,
+      org.keycloak.adapters.springboot.KeycloakAutoConfiguration
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+    org.hibernate: WARN

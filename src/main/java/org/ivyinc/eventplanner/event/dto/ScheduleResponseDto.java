@@ -7,8 +7,9 @@ import java.util.UUID;
 
 public record ScheduleResponseDto(
         UUID id,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         UUID eventId,
-        UUID locationId,
         LocalDateTime startTime,
         LocalDateTime endTime,
         Integer orderIndex,

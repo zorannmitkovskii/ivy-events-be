@@ -18,7 +18,7 @@ public class FileStorage extends BaseEntity {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    private Long ownerId;
+    private String ownerId;
 
     @Column(name = "file_url", nullable = false, columnDefinition = "TEXT")
     private String fileUrl;

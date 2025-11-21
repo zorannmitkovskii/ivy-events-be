@@ -17,8 +17,4 @@ public abstract class BaseControllerTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    /**
-     * Override to provide the base API path for the controller under test.
-     */
-    protected abstract String getBasePath();
 }

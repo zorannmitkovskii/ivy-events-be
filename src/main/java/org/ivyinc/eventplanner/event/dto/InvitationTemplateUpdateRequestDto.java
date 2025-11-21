@@ -1,11 +1,13 @@
 package org.ivyinc.eventplanner.event.dto;
 
+import java.util.Map;
+
 public record InvitationTemplateUpdateRequestDto(
         String name,
         String templatePath,
         String previewImage,
         String description,
-        String sections,
+        Map<String, Object> sections,
         String themeColor,
         String fontStyle,
         String backgroundImageUrl,

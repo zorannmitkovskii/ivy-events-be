@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public record ScheduleCreateDto(
         UUID eventId,
-        UUID locationId,
         LocalDateTime startTime,
         LocalDateTime endTime,
         Integer orderIndex,

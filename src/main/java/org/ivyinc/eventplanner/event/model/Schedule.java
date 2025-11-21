@@ -12,16 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "schedule")
+@Table(name = "schedules")
 public class Schedule extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id", nullable = false)
-    private Location location;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;

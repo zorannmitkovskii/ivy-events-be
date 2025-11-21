@@ -8,6 +8,10 @@ import org.ivyinc.eventplanner.event.model.Form;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        uses = { FormFieldMapper.class }
+)
 public interface FormMapper extends BaseMapper<Form, FormCreateDto, FormUpdateDto, FormResponseDto>{
 }

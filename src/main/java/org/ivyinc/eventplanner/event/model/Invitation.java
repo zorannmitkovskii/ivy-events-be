@@ -2,7 +2,12 @@ package org.ivyinc.eventplanner.event.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.ivyinc.eventplanner.common.BaseEntity;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -17,20 +22,33 @@ public class Invitation extends BaseEntity {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @Column(name = "template_id")
-    private String templateId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "template_id")
+    private InvitationTemplate template;
 
-    @Column(name = "form_id")
-    private String formId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "form_id")
+    private Form form;
 
-    // Store JSON as text for simplicity
-    @Column(name = "custom_sections", columnDefinition = "TEXT")
-    private String customSections;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "custom_sections")
+    private Map<String, Object> customSections;
 
-    // Map to unique_url
     @Column(name = "unique_url", unique = true)
     private String publicCode;
 
+    @Column(name = "sent_at")
+    private LocalDateTime sentAt;
+
+    @Column(name = "view_count")
+    private Integer viewCount;
+
+    @Column(name = "last_viewed_at")
+    private LocalDateTime lastViewedAt;
+
+    @Column(name = "rsvp_token")
+    private String rsvpToken;
+
     @Column(name = "is_active")
-    private Boolean active;
+    private Boolean active = true;
 }

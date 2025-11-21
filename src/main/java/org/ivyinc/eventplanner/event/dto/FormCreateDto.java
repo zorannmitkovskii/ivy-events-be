@@ -1,6 +1,9 @@
 package org.ivyinc.eventplanner.event.dto;
 
-import org.ivyinc.eventplanner.common.BaseCreateRequestDto;
+import java.util.List;
 
-public record FormCreateDto() implements BaseCreateRequestDto {
-}
+public record FormCreateDto(
+        String name,
+        Integer version,
+        List<FormFieldCreateDto> fields
+) {}

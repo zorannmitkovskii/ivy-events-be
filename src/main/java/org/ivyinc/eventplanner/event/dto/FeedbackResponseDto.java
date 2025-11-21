@@ -2,7 +2,14 @@ package org.ivyinc.eventplanner.event.dto;
 
 import org.ivyinc.eventplanner.common.BaseResponseDto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record FeedbackResponseDto(UUID id) implements BaseResponseDto {
+public record FeedbackResponseDto(
+        UUID id,
+        Integer rating,
+        String comment,
+        String mediaUrl,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt) implements BaseResponseDto {
 }

@@ -8,6 +8,7 @@ import org.ivyinc.eventplanner.event.builder.DietaryBuilder;
 import org.ivyinc.eventplanner.event.dto.DietaryCreateDto;
 import org.ivyinc.eventplanner.event.dto.DietaryResponseDto;
 import org.ivyinc.eventplanner.event.dto.DietaryUpdateDto;
+import org.ivyinc.eventplanner.event.model.Dietary;
 import org.ivyinc.eventplanner.event.service.DietaryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class DietaryControllerTest extends BaseControllerTest {
     private DietaryService dietaryService;
 
     // Your builder that provides sample DTOs
-    private final DtoBuilder<DietaryCreateDto, DietaryUpdateDto, DietaryResponseDto> dietaryDtoBuilder =
+    private final DietaryBuilder dietaryDtoBuilder =
             new DietaryBuilder();
 
     @Test

@@ -4,23 +4,20 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.ivyinc.eventplanner.common.BaseEntity;
 
+import java.util.List;
+
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "forms")
-public class Form extends BaseEntity {
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    private Event event;
+public class Form  extends BaseEntity {
 
     private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
     private Integer version;
+
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FormField> fields;
 }

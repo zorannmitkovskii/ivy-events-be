@@ -2,17 +2,20 @@ package org.ivyinc.eventplanner.event.dto;
 
 import org.ivyinc.eventplanner.event.enums.LocationType;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.ivyinc.eventplanner.common.BaseResponseDto;
 import org.ivyinc.eventplanner.event.model.Country;
 
 public record LocationResponseDto(
         UUID id,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         String name,
         LocationType type,
         String addressLine,
         String city,
-        Country country,
+        CountryResponseDto countryResponseDto,
         BigDecimal latitude,
         BigDecimal longitude,
         String googleMapsUrl,

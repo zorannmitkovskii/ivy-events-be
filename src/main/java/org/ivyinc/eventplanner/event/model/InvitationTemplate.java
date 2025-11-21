@@ -2,7 +2,11 @@ package org.ivyinc.eventplanner.event.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.ivyinc.eventplanner.common.BaseEntity;
+
+import java.util.Map;
 
 @Getter
 @Setter
@@ -24,9 +28,9 @@ public class InvitationTemplate extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    // Store JSON as text
-    @Column(columnDefinition = "TEXT")
-    private String sections;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column
+    private Map<String, Object> sections;
 
     @Column(name = "theme_color", length = 50)
     private String themeColor;

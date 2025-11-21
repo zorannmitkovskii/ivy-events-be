@@ -1,6 +1,6 @@
 package org.ivyinc.eventplanner.common;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -10,7 +10,7 @@ public class DateUtils {
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     .withZone(ZoneId.systemDefault());
 
-    public static String format(Instant instant) {
+    public static String format(LocalDateTime instant) {
         return instant == null ? null : FORMATTER.format(instant);
     }
 }

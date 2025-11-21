@@ -13,8 +13,9 @@ import org.ivyinc.eventplanner.common.BaseEntity;
 @Table(name = "sections")
 public class InvitationSection extends BaseEntity {
 
-    @Column(name = "template_id")
-    private String templateId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "template_id")
+    private InvitationTemplate template;
 
     private String name;
 
