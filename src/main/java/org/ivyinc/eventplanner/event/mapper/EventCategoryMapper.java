@@ -8,6 +8,6 @@ import org.ivyinc.eventplanner.event.model.EventCategory;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface EventCategoryMapper extends BaseMapper<EventCategory, EventCategoryCreateDto, EventCategoryUpdateDto, EventCategoryResponseDto>{
 }

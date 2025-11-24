@@ -1,159 +1,134 @@
 package org.ivyinc.eventplanner.event.builder;
 
 import org.ivyinc.eventplanner.common.builder.DtoBuilder;
-import org.ivyinc.eventplanner.event.dto.*;
+import org.ivyinc.eventplanner.event.dto.EventCategoryResponseDto;
+import org.ivyinc.eventplanner.event.dto.EventTypeCreateDto;
+import org.ivyinc.eventplanner.event.dto.EventTypeResponseDto;
+import org.ivyinc.eventplanner.event.dto.EventTypeUpdateDto;
 import org.ivyinc.eventplanner.event.model.EventCategory;
 import org.ivyinc.eventplanner.event.model.EventType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public abstract class EventTypeBuilder implements DtoBuilder<EventType, EventTypeCreateDto, EventTypeUpdateDto, EventTypeResponseDto> {
+public class EventTypeBuilder implements DtoBuilder<EventType, EventTypeCreateDto, EventTypeUpdateDto, EventTypeResponseDto> {
 
-    UUID corporateCategoryId = UUID.randomUUID();
-    UUID socialCategoryId = UUID.randomUUID();
-    EventCategoryBuilder.Corporate corporateBuilder = new EventCategoryBuilder.Corporate();
-    EventCategoryBuilder.Social socialBuilder = new EventCategoryBuilder.Social();
-    EventCategory corporateCategory = corporateBuilder.sampleEntity();
-    EventCategoryResponseDto corporateCategoryCreateResponseDto = corporateBuilder.sampleCreateResponse(corporateCategoryId);
-    EventCategoryResponseDto socialCategoryCreateResponseDto = socialBuilder.sampleCreateResponse(socialCategoryId);
-    EventCategoryResponseDto corporateCategoryUpdateResponseDto = corporateBuilder.sampleUpdateResponse(corporateCategoryId);
-    EventCategoryResponseDto socialCategoryUpdateResponseDto = socialBuilder.sampleUpdateResponse(socialCategoryId);
-    EventCategory socialCategory = socialBuilder.sampleEntity();
+    private final EventCategoryBuilder.Corporate categoryBuilder = new EventCategoryBuilder.Corporate();
+    private final EventCategory category = categoryBuilder.sampleEntity();
 
-    // ----------- Abstract methods that subclasses override -----------
+    private final UUID categoryId = UUID.randomUUID();
 
     @Override
-    public abstract EventType sampleEntity();
+    public EventType sampleEntity() {
+        return EventType.builder()
+                .eventCategory(category)
+                .name("Conference")
+                .description("Formal corporate conference")
+                .iconUrl("https://cdn.ivyinc.com/icons/conference.png")
+                .isActive(true)
+                .build();
+    }
 
     @Override
-    public abstract EventTypeCreateDto sampleCreateDto();
+    public EventTypeCreateDto sampleCreateDto() {
+        return new EventTypeCreateDto(
+                categoryId,
+                "Conference",
+                "Formal corporate conference"
+        );
+    }
 
     @Override
-    public abstract EventTypeUpdateDto sampleUpdateDto();
+    public EventTypeUpdateDto sampleUpdateDto() {
+        return new EventTypeUpdateDto(
+                categoryId,
+                "Conference (Updated)",
+                "Updated description"
+        );
+    }
+
+    private EventCategoryResponseDto categoryResponse(UUID id) {
+        var c = categoryBuilder.sampleCreateDto();
+        return new EventCategoryResponseDto(
+                id,
+                c.name(),
+                c.description(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
 
     @Override
-    public abstract EventTypeResponseDto sampleCreateResponse(UUID id);
+    public EventTypeResponseDto sampleCreateResponse(UUID id) {
+        var c = sampleCreateDto();
+        return new EventTypeResponseDto(
+                id,
+                categoryResponse(categoryId),
+                c.name(),
+                c.description(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
 
     @Override
-    public abstract EventTypeResponseDto sampleUpdateResponse(UUID id);
+    public EventTypeResponseDto sampleUpdateResponse(UUID id) {
+        var u = sampleUpdateDto();
+        return new EventTypeResponseDto(
+                id,
+                categoryResponse(categoryId),
+                u.name(),
+                u.description(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
 
     @Override
     public Class<EventTypeResponseDto> responseDtoClass() {
         return EventTypeResponseDto.class;
     }
 
-    // ================================================================
-    // 🏢 CORPORATE → TEAM BUILDING
-    // ================================================================
-    public static class TeamBuilding extends EventTypeBuilder {
-
+    // Convenience variants used across tests
+    public static class Wedding extends EventTypeBuilder {
         @Override
         public EventType sampleEntity() {
             return EventType.builder()
-                    .eventCategory(corporateCategory)
-                    .name("Team Building")
-                    .description("Activities designed to strengthen collaboration and trust among employees.")
+                    .eventCategory(new EventCategoryBuilder.Social().sampleEntity())
+                    .name("Wedding")
+                    .description("Wedding ceremonies and receptions")
+                    .iconUrl("https://cdn.ivyinc.com/icons/wedding.png")
+                    .isActive(true)
                     .build();
         }
-
         @Override
         public EventTypeCreateDto sampleCreateDto() {
-            return new EventTypeCreateDto(
-                    corporateCategoryId,
-                    "Team Building",
-                    "Activities designed to strengthen collaboration and trust among employees."
-            );
+            return new EventTypeCreateDto(UUID.randomUUID(), "Wedding", "Wedding ceremonies and receptions");
         }
-
         @Override
         public EventTypeUpdateDto sampleUpdateDto() {
-            return new EventTypeUpdateDto(
-                    corporateCategoryId,
-                    "Updated Team Building",
-                    "Updated description for team-building events."
-            );
-        }
-
-        @Override
-        public EventTypeResponseDto sampleCreateResponse(UUID id) {
-            return new EventTypeResponseDto(
-                    id,
-                    corporateCategoryCreateResponseDto,
-                    "Team Building",
-                    "Activities designed to strengthen collaboration and trust among employees.",
-                    LocalDateTime.now(),
-                    LocalDateTime.now()
-            );
-        }
-
-        @Override
-        public EventTypeResponseDto sampleUpdateResponse(UUID id) {
-            return new EventTypeResponseDto(
-                    id,
-                    corporateCategoryUpdateResponseDto,
-                    "Updated Team Building",
-                    "Updated description for team-building events.",
-                    LocalDateTime.now(),
-                    LocalDateTime.now()
-            );
+            return new EventTypeUpdateDto(UUID.randomUUID(), "Wedding (Updated)", "Updated - weddings");
         }
     }
 
-    // ================================================================
-    // 💍 SOCIAL → WEDDING
-    // ================================================================
-    public static class Wedding extends EventTypeBuilder {
-
+    public static class TeamBuilding extends EventTypeBuilder {
         @Override
         public EventType sampleEntity() {
             return EventType.builder()
-                    .eventCategory(socialCategory)
-                    .name("Wedding")
-                    .description("A special ceremony celebrating the union of two people.")
+                    .eventCategory(new EventCategoryBuilder.Corporate().sampleEntity())
+                    .name("Team Building")
+                    .description("Corporate team building activities")
+                    .iconUrl("https://cdn.ivyinc.com/icons/team-building.png")
+                    .isActive(true)
                     .build();
         }
-
         @Override
         public EventTypeCreateDto sampleCreateDto() {
-            return new EventTypeCreateDto(
-                    socialCategoryId,
-                    "Wedding",
-                    "A special ceremony celebrating the union of two people."
-            );
+            return new EventTypeCreateDto(UUID.randomUUID(), "Team Building", "Corporate team building activities");
         }
-
         @Override
         public EventTypeUpdateDto sampleUpdateDto() {
-            return new EventTypeUpdateDto(
-                    socialCategoryId,
-                    "Updated Wedding",
-                    "Updated description for wedding event type."
-            );
-        }
-
-        @Override
-        public EventTypeResponseDto sampleCreateResponse(UUID id) {
-            return new EventTypeResponseDto(
-                    id,
-                    socialCategoryCreateResponseDto,
-                    "Wedding",
-                    "A special ceremony celebrating the union of two people.",
-                    LocalDateTime.now(),
-                    LocalDateTime.now()
-            );
-        }
-
-        @Override
-        public EventTypeResponseDto sampleUpdateResponse(UUID id) {
-            return new EventTypeResponseDto(
-                    id,
-                    socialCategoryUpdateResponseDto,
-                    "Updated Wedding",
-                    "Updated description for wedding event type.",
-                    LocalDateTime.now(),
-                    LocalDateTime.now()
-            );
+            return new EventTypeUpdateDto(UUID.randomUUID(), "Team Building (Updated)", "Updated - team events");
         }
     }
 }

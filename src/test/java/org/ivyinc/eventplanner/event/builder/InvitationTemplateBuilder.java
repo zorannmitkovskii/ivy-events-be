@@ -1,9 +1,7 @@
 package org.ivyinc.eventplanner.event.builder;
 
 import org.ivyinc.eventplanner.common.builder.DtoBuilder;
-import org.ivyinc.eventplanner.event.dto.InvitationTemplateCreateRequestDto;
-import org.ivyinc.eventplanner.event.dto.InvitationTemplateResponseDto;
-import org.ivyinc.eventplanner.event.dto.InvitationTemplateUpdateRequestDto;
+import org.ivyinc.eventplanner.event.dto.*;
 import org.ivyinc.eventplanner.event.model.InvitationTemplate;
 
 import java.time.LocalDateTime;
@@ -13,8 +11,8 @@ import java.util.UUID;
 
 public class InvitationTemplateBuilder implements DtoBuilder<
         InvitationTemplate,
-        InvitationTemplateCreateRequestDto,
-        InvitationTemplateUpdateRequestDto,
+        InvitationTemplateCreateDto,
+        InvitationTemplateUpdateDto,
         InvitationTemplateResponseDto
         > {
 
@@ -44,8 +42,8 @@ public class InvitationTemplateBuilder implements DtoBuilder<
     }
 
     @Override
-    public InvitationTemplateCreateRequestDto sampleCreateDto() {
-        return new InvitationTemplateCreateRequestDto(
+    public InvitationTemplateCreateDto sampleCreateDto() {
+        return new InvitationTemplateCreateDto(
                 "Elegant Wedding Template",
                 "/templates/wedding/elegant.html",
                 "/images/templates/wedding/elegant.png",
@@ -61,10 +59,10 @@ public class InvitationTemplateBuilder implements DtoBuilder<
     }
 
     @Override
-    public InvitationTemplateUpdateRequestDto sampleUpdateDto() {
+    public InvitationTemplateUpdateDto sampleUpdateDto() {
         Map<String, Object> updatedSections = new LinkedHashMap<>(sampleSections());
         updatedSections.put("details", Map.of("date", "2025-07-01", "venue", "Lakeside Hall"));
-        return new InvitationTemplateUpdateRequestDto(
+        return new InvitationTemplateUpdateDto(
                 "Elegant Wedding Template v2",
                 "/templates/wedding/elegant-v2.html",
                 "/images/templates/wedding/elegant-v2.png",

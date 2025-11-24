@@ -5,9 +5,8 @@ import org.ivyinc.eventplanner.common.BaseResponseDto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record EventTypeResponseDto(
+public record FormSubmissionResponseDto(
         UUID id,
-        EventCategoryResponseDto eventCategory,
         String name,
         String description,
         LocalDateTime createdAt,

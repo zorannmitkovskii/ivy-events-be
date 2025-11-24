@@ -115,17 +115,7 @@ CREATE TABLE IF NOT EXISTS vendor_packages (
 CREATE INDEX IF NOT EXISTS idx_vendor_packages_vendor_id ON vendor_packages(vendor_id);
 CREATE INDEX IF NOT EXISTS idx_vendor_packages_package_id ON vendor_packages(package_id);
 
--- Junction table for Many-to-Many between locations and packages
-CREATE TABLE IF NOT EXISTS location_packages (
-    location_id UUID NOT NULL,
-    package_id UUID NOT NULL,
-    PRIMARY KEY (location_id, package_id),
-    CONSTRAINT fk_location_packages_location FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE CASCADE,
-    CONSTRAINT fk_location_packages_package FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE CASCADE
-    );
 
-CREATE INDEX IF NOT EXISTS idx_location_packages_location_id ON location_packages(location_id);
-CREATE INDEX IF NOT EXISTS idx_location_packages_package_id ON location_packages(package_id);
 
 -- ===================================
 -- LOCATIONS
@@ -159,6 +149,17 @@ CREATE INDEX IF NOT EXISTS idx_locations_country_iso3 ON locations(country_iso3)
 CREATE INDEX IF NOT EXISTS idx_locations_contact_id ON locations(contact_id);
 CREATE INDEX IF NOT EXISTS idx_locations_city ON locations(city);
 
+-- Junction table for Many-to-Many between locations and packages
+CREATE TABLE IF NOT EXISTS location_packages (
+                                                 location_id UUID NOT NULL,
+                                                 package_id UUID NOT NULL,
+                                                 PRIMARY KEY (location_id, package_id),
+    CONSTRAINT fk_location_packages_location FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE CASCADE,
+    CONSTRAINT fk_location_packages_package FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE CASCADE
+    );
+
+CREATE INDEX IF NOT EXISTS idx_location_packages_location_id ON location_packages(location_id);
+CREATE INDEX IF NOT EXISTS idx_location_packages_package_id ON location_packages(package_id);
 -- ===================================
 -- EVENT INFO
 -- ===================================
@@ -220,6 +221,38 @@ CREATE INDEX IF NOT EXISTS idx_events_vendor_id ON events(vendor_id);
 CREATE INDEX IF NOT EXISTS idx_events_organizer_id ON events(organizer_id);
 
 -- ===================================
+-- GUESTS
+-- Prefer referencing contacts for actual contact details; keep email/phone for quick lookups if desired
+-- ===================================
+CREATE TABLE IF NOT EXISTS guests (
+                                      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    event_id UUID NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone_number VARCHAR(50),
+    note TEXT,
+    table_number VARCHAR(50),
+    dietary_preferences JSON,
+    contact_id UUID,
+    notification_type VARCHAR(50),
+    invite_status VARCHAR(50) DEFAULT 'pending', -- pending, invited, confirmed, declined
+    num_of_guests INT DEFAULT 1,
+    rsvp_date TIMESTAMP,
+    is_vip BOOLEAN DEFAULT FALSE,
+    check_in_status BOOLEAN DEFAULT FALSE,
+    qr_code VARCHAR(255),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    CONSTRAINT fk_guest_event FOREIGN KEY (event_id) REFERENCES events(id),
+    CONSTRAINT fk_guest_contact FOREIGN KEY (contact_id) REFERENCES contacts(id)
+    );
+
+CREATE INDEX IF NOT EXISTS idx_guests_event_id ON guests(event_id);
+CREATE INDEX IF NOT EXISTS idx_guests_contact_id ON guests(contact_id);
+CREATE INDEX IF NOT EXISTS idx_guests_email ON guests(email);
+
+
+-- ===================================
 -- FORMS / FIELDS / RESPONSES
 -- ===================================
 CREATE TABLE IF NOT EXISTS form (
@@ -279,37 +312,6 @@ CREATE TABLE IF NOT EXISTS responses (
     );
 
 CREATE INDEX IF NOT EXISTS idx_responses_field_id ON responses(field_id);
-
--- ===================================
--- GUESTS
--- Prefer referencing contacts for actual contact details; keep email/phone for quick lookups if desired
--- ===================================
-CREATE TABLE IF NOT EXISTS guests (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    event_id UUID NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255),
-    phone_number VARCHAR(50),
-    note TEXT,
-    table_number VARCHAR(50),
-    dietary_preferences JSON,
-    contact_id UUID,
-    notification_type VARCHAR(50),
-    invite_status VARCHAR(50) DEFAULT 'pending', -- pending, invited, confirmed, declined
-    num_of_guests INT DEFAULT 1,
-    rsvp_date TIMESTAMP,
-    is_vip BOOLEAN DEFAULT FALSE,
-    check_in_status BOOLEAN DEFAULT FALSE,
-    qr_code VARCHAR(255),
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_guest_event FOREIGN KEY (event_id) REFERENCES events(id),
-    CONSTRAINT fk_guest_contact FOREIGN KEY (contact_id) REFERENCES contacts(id)
-    );
-
-CREATE INDEX IF NOT EXISTS idx_guests_event_id ON guests(event_id);
-CREATE INDEX IF NOT EXISTS idx_guests_contact_id ON guests(contact_id);
-CREATE INDEX IF NOT EXISTS idx_guests_email ON guests(email);
 
 -- ===================================
 -- BUDGETS & EXPENSES
@@ -443,7 +445,6 @@ CREATE TABLE IF NOT EXISTS schedules (
     );
 
 CREATE INDEX IF NOT EXISTS idx_schedule_event_id ON schedules(event_id);
-CREATE INDEX IF NOT EXISTS idx_schedule_location_id ON schedules(location_id);
 CREATE INDEX IF NOT EXISTS idx_schedule_start_time ON schedules(start_time);
 
 -- ===================================
